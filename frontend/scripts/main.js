@@ -17,6 +17,59 @@ function checkLogin() {
     printLogin();
   }
 }
+
+function printDocuments() {
+  app.innerHTML = `
+ <h3>Welcome back, ${user.id}!</h3>
+ <button id="createDocumentInputsBtn">Create Document</button>
+ <div id="createDocumentContainer"></div>
+ <h3>Documents</h3>
+ <div id="documents"></div>
+  `;
+  const createDocumentInputsBtn = document.querySelector(
+    '#createDocumentInputsBtn'
+  );
+  createDocumentInputsBtn.addEventListener('click', printCreateNewDocument);
+}
+
+function printCreateNewDocument() {
+  const createDocumentContainer = document.querySelector(
+    '#createDocumentContainer'
+  );
+
+  createDocumentContainer.innerHTML = `    
+    <form action="">
+      <input id="newDocumentTitle" type="text" placeholder="Title"><br>
+      <textarea id="newDocumentDesc" type="text" placeholder="Description" cols="25" rows="5" maxlength="100"></textarea>
+      <button id="createDocumentBtn">Create</button>
+    </form>`;
+
+  const createDocumentBtn = document.querySelector('#createDocumentBtn');
+  createDocumentBtn.addEventListener('click', createDocument);
+}
+
+function createDocument(e) {
+  e.preventDefault();
+
+  const newDocumentTitle = document.querySelector('#newDocumentTitle').value;
+  const newDocumentDesc = document.querySelector('#newDocumentDesc').value;
+
+  if (newDocumentTitle) {
+    const newDocument = { newDocumentTitle, newDocumentDesc };
+    fetch(BASE_URL + '/documents/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+      body: JSON.stringify(newDocument),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+}
+
 function printLogin() {
   app.innerHTML = `
     <h4>Login:</h4>
