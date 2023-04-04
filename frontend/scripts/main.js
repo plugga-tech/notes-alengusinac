@@ -1,4 +1,4 @@
-import '../style.css';
+import '../style.scss';
 
 const app = document.querySelector('#app');
 const BASE_URL = 'http://localhost:3000';
@@ -20,12 +20,39 @@ function checkLogin() {
 
 function printDocuments() {
   app.innerHTML = `
- <h3>Welcome back, ${user.id}!</h3>
- <button id="createDocumentInputsBtn">Create Document</button>
- <div id="createDocumentContainer"></div>
- <h3>Documents</h3>
- <div id="documents"></div>
+    <h3>Welcome back, ${user.id}!</h3>
+    <button id="createDocumentInputsBtn">Create Document</button>
+    <button id="logoutBtn">Logout</button>
+    <div id="createDocumentContainer"></div>
+    <h3>Documents</h3>
+    <div id="documents"></div>
   `;
+
+  const documentsContainer = document.querySelector('#documents');
+  fetch(BASE_URL + '/documents/' + user.id)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.length > 0) {
+        console.log('hej');
+        data.map((doc) => {
+          documentsContainer.innerHTML += `
+         <div data-id="${doc.id}" class="document">
+          <h5>${doc.title}</h5>
+          <p>${doc.description}</p>
+          <button>View</button>
+          <button>Edit</button>
+         </div> 
+          `;
+        });
+      }
+    });
+
+  const logoutBtn = document.querySelector('#logoutBtn');
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('user');
+    checkLogin();
+  });
+
   const createDocumentInputsBtn = document.querySelector(
     '#createDocumentInputsBtn'
   );
@@ -48,26 +75,31 @@ function printCreateNewDocument() {
   createDocumentBtn.addEventListener('click', createDocument);
 }
 
-function createDocument(e) {
+async function createDocument(e) {
   e.preventDefault();
 
-  const newDocumentTitle = document.querySelector('#newDocumentTitle').value;
-  const newDocumentDesc = document.querySelector('#newDocumentDesc').value;
+  const title = document.querySelector('#newDocumentTitle').value;
+  const description = document.querySelector('#newDocumentDesc').value;
 
   if (newDocumentTitle) {
-    const newDocument = { newDocumentTitle, newDocumentDesc };
+    const document = { user, title, description };
     fetch(BASE_URL + '/documents/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/JSON',
       },
-      body: JSON.stringify(newDocument),
+      body: JSON.stringify(document),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        editDocument(data);
       });
   }
+}
+
+function editDocument(id) {
+  printDocuments();
 }
 
 function printLogin() {
