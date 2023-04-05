@@ -4,10 +4,6 @@ const app = document.querySelector('#app');
 const BASE_URL = 'http://localhost:3000';
 let user = JSON.parse(localStorage.getItem('user'));
 
-tinymce.init({
-  selector: '#myTextArea',
-});
-
 function checkLogin() {
   user = JSON.parse(localStorage.getItem('user'));
 
@@ -29,7 +25,7 @@ function printDocuments() {
   `;
 
   const documentsContainer = document.querySelector('#documents');
-  fetch(BASE_URL + '/documents/' + user.id)
+  fetch(BASE_URL + '/documents/user/' + user.id)
     .then((response) => response.json())
     .then((data) => {
       if (data.length > 0) {
@@ -39,14 +35,17 @@ function printDocuments() {
          <div data-id="${doc.id}" class="document">
           <h5>${doc.title}</h5>
           <p>${doc.description}</p>
-          <button>View</button>
-          <button>Edit</button>
+          <button class="viewDocumentBtn">View</button>
+          <button class="editDocumentBtn">Edit</button>
          </div> 
           `;
+          printDocumentsEventlisteners();
         });
       }
     });
+}
 
+function printDocumentsEventlisteners() {
   const logoutBtn = document.querySelector('#logoutBtn');
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('user');
@@ -57,6 +56,22 @@ function printDocuments() {
     '#createDocumentInputsBtn'
   );
   createDocumentInputsBtn.addEventListener('click', printCreateNewDocument);
+
+  const viewDocumentBtns = document.querySelectorAll('.viewDocumentBtn');
+  viewDocumentBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const documentId = e.currentTarget.parentElement.dataset.id;
+      viewDocument(documentId);
+    });
+  });
+
+  const editDocumentBtns = document.querySelectorAll('.editDocumentBtn');
+  editDocumentBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const documentId = e.currentTarget.parentElement.dataset.id;
+      editDocument(documentId);
+    });
+  });
 }
 
 function printCreateNewDocument() {
