@@ -98,8 +98,90 @@ async function createDocument(e) {
   }
 }
 
-function editDocument(id) {
-  printDocuments();
+function viewDocument(id) {
+  fetch(BASE_URL + '/documents/' + id)
+    .then((response) => response.json())
+    .then((data) => {
+      const doc = data[0];
+
+      app.innerHTML = `
+        <button id="backBtn">Back</button> 
+        <button id="editBtn" data-id="${doc.id}">Edit</button>
+        <h3>${doc.title}</h3>
+        <p>${doc.description}</p>
+        <hr>
+        <div>
+          ${doc.value ? doc.value : ''}
+        </div>
+      `;
+
+      const backBtn = document.querySelector('#backBtn');
+      backBtn.addEventListener('click', printDocuments);
+
+      const editBtn = document.querySelector('#editBtn');
+      editBtn.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        editDocument(id);
+      });
+    });
+}
+
+async function editDocument(id) {
+  const documentArray = await fetch(BASE_URL + '/documents/' + id).then(
+    (response) => response.json()
+  );
+  const doc = documentArray[0];
+
+  app.innerHTML = `
+  <button id="cancelBtn" data-id="${doc.id}">Cancel</button>
+  <button id="saveBtn" data-id="${doc.id}">Save</button> 
+   <h3>${doc.title}</h3>
+   <p>${doc.description}</p>
+   <textarea id="myTextArea"></textarea>
+  `;
+
+  tinymce.init({
+    selector: '#myTextArea',
+    setup: (editor) => {
+      editor.on('init', () => {
+        editor.setContent(doc.value ? doc.value : '');
+      });
+      editor.on('change', () => {
+        editor.save();
+      });
+    },
+  });
+
+  const saveBtn = document.querySelector('#saveBtn');
+  saveBtn.addEventListener('click', (e) => {
+    const id = e.currentTarget.dataset.id;
+    saveDocument(id);
+  });
+
+  const cancelBtn = document.querySelector('#cancelBtn');
+  cancelBtn.addEventListener('click', (e) => {
+    const id = e.currentTarget.dataset.id;
+    viewDocument(id);
+  });
+}
+
+function saveDocument(id) {
+  const value = document.querySelector('#myTextArea').value;
+  const doc = { id, value };
+  console.log(doc);
+
+  fetch(BASE_URL + '/documents/save', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/JSON',
+    },
+    body: JSON.stringify(doc),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.id);
+      viewDocument(data.id);
+    });
 }
 
 function printLogin() {
