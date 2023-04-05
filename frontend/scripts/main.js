@@ -82,13 +82,13 @@ async function createDocument(e) {
   const description = document.querySelector('#newDocumentDesc').value;
 
   if (newDocumentTitle) {
-    const document = { user, title, description };
+    const doc = { user, title, description };
     fetch(BASE_URL + '/documents/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/JSON',
       },
-      body: JSON.stringify(document),
+      body: JSON.stringify(doc),
     })
       .then((response) => response.json())
       .then((data) => {
