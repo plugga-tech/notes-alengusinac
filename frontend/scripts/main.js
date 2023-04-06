@@ -1,4 +1,5 @@
 import '../style.scss';
+import { Buffer } from 'buffer';
 
 const app = document.querySelector('#app');
 const BASE_URL = 'http://localhost:3000';
@@ -29,7 +30,6 @@ function printDocuments() {
     .then((response) => response.json())
     .then((data) => {
       if (data.length > 0) {
-        console.log('hej');
         data.map((doc) => {
           documentsContainer.innerHTML += `
          <div data-id="${doc.id}" class="document">
@@ -118,6 +118,9 @@ function viewDocument(id) {
     .then((response) => response.json())
     .then((data) => {
       const doc = data[0];
+      doc.value
+        ? (doc.value = Buffer.from(doc.value.data).toString())
+        : undefined;
 
       app.innerHTML = `
         <button id="backBtn">Back</button> 
@@ -146,6 +149,7 @@ async function editDocument(id) {
     (response) => response.json()
   );
   const doc = documentArray[0];
+  doc.value ? (doc.value = Buffer.from(doc.value.data).toString()) : undefined;
 
   app.innerHTML = `
   <button id="cancelBtn" data-id="${doc.id}">Cancel</button>
@@ -157,6 +161,8 @@ async function editDocument(id) {
 
   tinymce.init({
     selector: '#myTextArea',
+    toolbar:
+      'undo redo | formatselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent',
     setup: (editor) => {
       editor.on('init', () => {
         editor.setContent(doc.value ? doc.value : '');
@@ -183,7 +189,6 @@ async function editDocument(id) {
 function saveDocument(id) {
   const value = document.querySelector('#myTextArea').value;
   const doc = { id, value };
-  console.log(doc);
 
   fetch(BASE_URL + '/documents/save', {
     method: 'POST',
