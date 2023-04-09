@@ -79,7 +79,7 @@ function printCreateNewDocument() {
     '#createDocumentContainer'
   );
 
-  createDocumentContainer.innerHTML = `    
+  createDocumentContainer.innerHTML = `
     <div id="newDocumentMessage"></div>    
     <form action="">
       <input id="newDocumentTitle" type="text" placeholder="Title"><br>
@@ -132,9 +132,6 @@ function viewDocument(id) {
     .then((response) => response.json())
     .then((data) => {
       const doc = data[0];
-      doc.value
-        ? (doc.value = Buffer.from(doc.value.data).toString())
-        : undefined;
 
       app.innerHTML = `
         <button id="backBtn">Back</button> 
@@ -163,7 +160,6 @@ async function editDocument(id) {
     (response) => response.json()
   );
   const doc = documentArray[0];
-  doc.value ? (doc.value = Buffer.from(doc.value.data).toString()) : undefined;
 
   app.innerHTML = `
   <button id="cancelBtn" data-id="${doc.id}">Cancel</button>
@@ -289,11 +285,22 @@ async function createUser(e) {
       },
       body: JSON.stringify(user),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw response;
+        }
+      })
       .then((data) => {
         console.log(data);
         document.querySelector('#createUserMessage').innerHTML =
           'User created.';
+      })
+      .catch((err) => {
+        console.log(err);
+        document.querySelector('#createUserMessage').innerHTML =
+          'Username is unavailable.';
       });
   }
 }

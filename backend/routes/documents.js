@@ -16,6 +16,10 @@ router.get('/:id', (req, res) => {
       if (err) {
         console.error('queryError', err);
       }
+      result.forEach((doc) => {
+        doc.value = Buffer.from(doc.value).toString();
+      });
+
       console.log(result);
       res.send(result);
     });
