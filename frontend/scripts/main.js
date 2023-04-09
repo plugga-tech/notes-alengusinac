@@ -80,6 +80,7 @@ function printCreateNewDocument() {
   );
 
   createDocumentContainer.innerHTML = `    
+    <div id="newDocumentMessage"></div>    
     <form action="">
       <input id="newDocumentTitle" type="text" placeholder="Title"><br>
       <textarea id="newDocumentDesc" type="text" placeholder="Description" cols="25" rows="5" maxlength="100"></textarea>
@@ -96,7 +97,7 @@ async function createDocument(e) {
   const title = document.querySelector('#newDocumentTitle').value;
   const description = document.querySelector('#newDocumentDesc').value;
 
-  if (newDocumentTitle) {
+  if (title) {
     const doc = { user, title, description };
     fetch(BASE_URL + '/documents/create', {
       method: 'POST',
@@ -105,10 +106,23 @@ async function createDocument(e) {
       },
       body: JSON.stringify(doc),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw response.json();
+        }
+      })
       .then((data) => {
         console.log(data);
         editDocument(data);
+      })
+      .catch((err) => {
+        console.log();
+        const newDocumentMessage = document.querySelector(
+          '#newDocumentMessage'
+        );
+        newDocumentMessage.innerHTML = 'The title is already used.';
       });
   }
 }
