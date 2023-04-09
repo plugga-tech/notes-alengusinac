@@ -16,7 +16,7 @@ function checkLogin() {
 
 function printDocuments() {
   app.innerHTML = `
-    <h3>Welcome back, ${user.id}!</h3>
+    <h3>Welcome, ${user.username}!</h3>
     <button id="logoutBtn">Logout</button>
     <button id="createDocumentInputsBtn">Create Document</button>
     <div id="createDocumentContainer"></div>

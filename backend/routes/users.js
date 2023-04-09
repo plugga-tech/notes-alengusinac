@@ -14,7 +14,7 @@ router.post('/login', (req, res) => {
     if (err) {
       console.error('conError', err);
     }
-    const sql = `SELECT id FROM users WHERE username LIKE '${req.body.username}' AND password LIKE '${req.body.password}' LIMIT 1`;
+    const sql = `SELECT id, username FROM users WHERE username LIKE '${req.body.username}' AND password LIKE '${req.body.password}' LIMIT 1`;
 
     database.query(sql, (err, result) => {
       if (err) {
