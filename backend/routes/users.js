@@ -38,6 +38,7 @@ router.post('/create', (req, res) => {
     database.query(sql, (err, result) => {
       if (err) {
         console.error('queryError', err);
+        res.status(400).json({ error: err });
       }
       console.log(result);
       res.json(result);

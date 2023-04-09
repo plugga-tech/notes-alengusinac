@@ -39,9 +39,10 @@ router.get('/user/:userId', (req, res) => {
     database.query(sql, (err, result) => {
       if (err) {
         console.error('queryError', err);
+      } else {
+        console.log(result);
+        res.send(result);
       }
-      console.log(result);
-      res.send(result);
     });
   });
 });
@@ -58,9 +59,11 @@ router.post('/create', (req, res) => {
     database.query(sql, (err, result) => {
       if (err) {
         console.error('queryError', err);
+        res.status(400).json({ error: err });
+      } else {
+        console.log(result);
+        res.json(result.insertId);
       }
-      console.log(result);
-      res.json(result.insertId);
     });
   });
 });
