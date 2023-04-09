@@ -39,9 +39,9 @@ function printDocuments() {
           <button class="editDocumentBtn">Edit</button>
          </div> 
           `;
-          printDocumentsEventlisteners();
         });
       }
+      printDocumentsEventlisteners();
     });
 }
 
