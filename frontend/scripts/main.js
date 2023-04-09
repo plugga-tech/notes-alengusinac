@@ -165,6 +165,7 @@ async function editDocument(id) {
   <button id="saveBtn" data-id="${doc.id}">Save</button> 
    <h3>${doc.title}</h3>
    <p>${doc.description}</p>
+   <hr>
    <textarea id="myTextArea"></textarea>
   `;
 
