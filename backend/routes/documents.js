@@ -17,7 +17,9 @@ router.get('/:id', (req, res) => {
         console.error('queryError', err);
       }
       result.forEach((doc) => {
-        doc.value = Buffer.from(doc.value).toString();
+        if (doc.value) {
+          doc.value = Buffer.from(doc.value).toString();
+        }
       });
 
       console.log(result);
