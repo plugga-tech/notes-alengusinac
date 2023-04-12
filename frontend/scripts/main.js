@@ -17,8 +17,10 @@ function checkLogin() {
 function printDocuments() {
   app.innerHTML = `
     <h3>Welcome, ${user.username}!</h3>
-    <button id="logoutBtn">Logout</button>
-    <button id="createDocumentInputsBtn">Create Document</button>
+    <div class="navigation">
+      <button id="logoutBtn">Logout</button>
+      <button id="createDocumentInputsBtn">Create Document</button>
+    </div>
     <div id="createDocumentContainer"></div>
     <h3>Documents</h3>
     <div id="documents"></div>
@@ -79,10 +81,12 @@ function printCreateNewDocument() {
   );
 
   createDocumentContainer.innerHTML = `
-    <div id="newDocumentMessage"></div>    
+    <div id="newDocumentMessage"></div>  
+    <h3>New Document</h3>
     <form action="">
       <input id="newDocumentTitle" type="text" placeholder="Title"><br>
       <textarea id="newDocumentDesc" type="text" placeholder="Description" cols="25" rows="5" maxlength="100"></textarea>
+      <br>
       <button id="createDocumentBtn">Create</button>
     </form>`;
 
@@ -216,20 +220,30 @@ function saveDocument(id) {
 
 function printLogin() {
   app.innerHTML = `
-    <h4>Login:</h4>
-    <div id="loginMessage"></div>
-    <form>
-      <input type="text" id="loginUsername" placeholder="Username">
-      <input type="password" id="loginPassword" placeholder="Password">
-      <button id="loginBtn">Login</button>
-    </form>
-    <h4>Create user:</h4>
-    <div id="createUserMessage"></div>
-    <form>
-      <input type="text" id="createUserUsername" placeholder="Username">
-      <input type="password" id="createUserPassword" placeholder="Password">
-      <button id="createUserBtn">Create</button>
-    </form>
+    <div id="loginCreateUser">
+      <div id="loginUser">
+        <h4>Login:</h4>
+        <div id="loginMessage"></div>
+        <form>
+          <input type="text" id="loginUsername" placeholder="Username">
+          <br>
+          <input type="password" id="loginPassword" placeholder="Password">
+          <br>
+          <button id="loginBtn">Login</button>
+        </form>
+      </div>
+      <div id="createUser">
+        <h4>Create user:</h4>
+        <div id="createUserMessage"></div>
+        <form>
+          <input type="text" id="createUserUsername" placeholder="Username">
+          <br>
+          <input type="password" id="createUserPassword" placeholder="Password">
+          <br>
+          <button id="createUserBtn">Create</button>
+        </form>
+      </div>
+    </div>
     `;
 
   const loginBtn = document.querySelector('#loginBtn');
