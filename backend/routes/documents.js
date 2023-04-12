@@ -72,12 +72,16 @@ router.post('/create', (req, res) => {
 
 router.post('/save', (req, res) => {
   console.log(req.body);
+  let value = req.body.value;
+  const escString = database.escape(value);
+  console.log(escString);
 
   database.connect((err) => {
     if (err) {
       console.error('conError', err);
     }
-    const sql = `UPDATE documents SET value = '${req.body.value}' WHERE id = ${req.body.id}`;
+
+    const sql = `UPDATE documents SET value = ${escString} WHERE id = ${req.body.id}`;
 
     database.query(sql, (err, result) => {
       if (err) {
