@@ -6,6 +6,19 @@ h1 {
   font-family: 'Courier New', Courier, monospace;
 }
 
+input {
+  margin-bottom: 5px;
+}
+
+#loginCreateUser {
+  display: flex;
+  justify-content: space-around;  
+}
+
+#newDocumentMessage {
+  margin-top: 20px;
+}
+
 #documents {
   display: flex;
   flex-wrap: wrap;
