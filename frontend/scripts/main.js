@@ -176,7 +176,7 @@ async function editDocument(id) {
   tinymce.init({
     selector: '#myTextArea',
     toolbar:
-      'undo redo | formatselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent',
+      'undo redo | formatselect | fontselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent',
     setup: (editor) => {
       editor.on('init', () => {
         editor.setContent(doc.value ? doc.value : '');
