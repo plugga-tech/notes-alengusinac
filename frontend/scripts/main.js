@@ -142,7 +142,7 @@ function viewDocument(id) {
         <h3>${doc.title}</h3>
         <p>${doc.description}</p>
         <hr>
-        <div>
+        <div id="viewDocument">
           ${doc.value ? doc.value : ''}
         </div>
       `;
