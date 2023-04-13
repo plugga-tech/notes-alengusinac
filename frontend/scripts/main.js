@@ -88,10 +88,16 @@ function printCreateNewDocument() {
       <textarea id="newDocumentDesc" type="text" placeholder="Description" cols="25" rows="5" maxlength="100"></textarea>
       <br>
       <button id="createDocumentBtn">Create</button>
+      <button id="cancelCreateDocumentBtn">Cancel</button>
     </form>`;
 
   const createDocumentBtn = document.querySelector('#createDocumentBtn');
   createDocumentBtn.addEventListener('click', createDocument);
+
+  const cancelCreateDocumentBtn = document.querySelector(
+    '#cancelCreateDocumentBtn'
+  );
+  cancelCreateDocumentBtn.addEventListener('click', printDocuments);
 }
 
 async function createDocument(e) {
