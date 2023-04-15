@@ -93,4 +93,25 @@ router.post('/save', (req, res) => {
   });
 });
 
+router.post('/delete', (req, res) => {
+  console.log(req.body);
+  let id = req.body.id;
+
+  database.connect((err) => {
+    if (err) {
+      console.error('conError', err);
+    }
+
+    const sql = `DELETE FROM documents WHERE id = "${id}"`;
+
+    database.query(sql, (err, result) => {
+      if (err) {
+        console.error('queryError', err);
+      } else {
+        res.json(result);
+      }
+    });
+  });
+});
+
 module.exports = router;
