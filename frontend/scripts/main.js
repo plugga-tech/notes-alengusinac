@@ -18,8 +18,8 @@ function printDocuments() {
   app.innerHTML = `
     <h3>Welcome, ${user.username}!</h3>
     <div class="navigation">
+    <button class="primary-btn" id="createDocumentInputsBtn">Create Document</button>
       <button class="secondary-btn" id="logoutBtn">Logout</button>
-      <button class="primary-btn" id="createDocumentInputsBtn">Create Document</button>
     </div>
     <div id="createDocumentContainer"></div>
     <h3>Documents</h3>
@@ -147,17 +147,21 @@ function viewDocument(id) {
       const doc = data[0];
 
       app.innerHTML = `
-        <button id="backBtn">Back</button> 
-        <button class="primary-btn" id="editBtn" data-id="${
-          doc.id
-        }">Edit</button>
-        <button id="deleteBtn" data-id="${doc.id}">Delete</button>
+        <div class="navigation"> 
+          <button id="backBtn">Back</button>
+          <button id="deleteBtn" data-id="${doc.id}">Delete</button>
+          <button class="primary-btn" id="editBtn" data-id="${
+            doc.id
+          }">Edit</button>
+        </div>
         <div id="deletePopup"></div>
-        <h3>${doc.title}</h3>
-        <p>${doc.description}</p>
-        <hr>
-        <div id="viewDocument">
-          ${doc.value ? doc.value : ''}
+        <div class="viewDocument">
+          <h3>${doc.title}</h3>
+          <p>${doc.description}</p>
+          <hr>
+          <div id="document">
+            ${doc.value ? doc.value : ''}
+          </div>
         </div>
       `;
 
@@ -176,12 +180,17 @@ function viewDocument(id) {
         const deletePopup = document.querySelector('#deletePopup');
         deletePopup.innerHTML = `
          <p>Are you sure you want to delete this document?</p>
-         <button id="cancelDeleteBtn">Cancel</button>
-         <button id="deleteDocumentBtn" data-id="${docId}">Delete</button>
+         <button id="cancelDeleteBtn" data-id="${docId}">Cancel</button>
+         <button class="primary-btn" id="deleteDocumentBtn" data-id="${docId}">Delete</button>
         `;
         const deleteBtn = document.querySelector('#deleteDocumentBtn');
         deleteBtn.addEventListener('click', (e) => {
           deleteDocument(e.currentTarget.dataset.id);
+        });
+
+        const cancelDeleteBtn = document.querySelector('#cancelDeleteBtn');
+        cancelDeleteBtn.addEventListener('click', (e) => {
+          viewDocument(e.currentTarget.dataset.id);
         });
       });
     });
@@ -193,13 +202,17 @@ async function editDocument(id) {
   );
   const doc = documentArray[0];
 
-  app.innerHTML = `
-  <button id="cancelBtn" data-id="${doc.id}">Cancel</button>
-  <button id="saveBtn" data-id="${doc.id}">Save</button> 
-   <h3>${doc.title}</h3>
-   <p>${doc.description}</p>
-   <hr>
-   <textarea id="myTextArea"></textarea>
+  app.innerHTML = `    
+    <div class="navigation">
+      <button id="cancelBtn" data-id="${doc.id}">Cancel</button>
+      <button class="primary-btn" id="saveBtn" data-id="${doc.id}">Save</button> 
+    </div>
+    <div class="editDocument">
+      <h3>${doc.title}</h3>
+      <p>${doc.description}</p>
+      <hr>
+      <textarea id="myTextArea"></textarea>
+    </div>
   `;
 
   tinymce.init({

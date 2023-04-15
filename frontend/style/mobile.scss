@@ -10,11 +10,16 @@ h1 {
   text-align: center;
 }
 
+h3 {
+  text-align: center;
+}
+
 input {
   margin-bottom: 5px;
 }
 
 button {
+  height: 25px;
   border: 1px solid rgba(0, 0, 0, 0.505);
   border-radius: 5px;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.245);
@@ -32,25 +37,41 @@ button {
   }
 }
 
+#app {
+  padding: 0 20px;
+}
+
 #loginCreateUser {
+  width: 325px;
+  height: 350px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.415);
+  border-radius: 20px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.23);
 }
 
 .navigation {
-  height: 50px;
-  background-color: lightskyblue;
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  border: 1px solid black;
+  justify-content: flex-end;
 
   button {
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 15px;
+    margin: 0 5px;
+  }
+}
+
+#createDocumentContainer {
+  form {
+    text-align: center;
+
+    input, textarea {
+      width: 300px;
+      margin-bottom: 10px;
+    }
+
   }
 }
 
@@ -67,8 +88,8 @@ button {
 
 .document {
   position: relative;
-  width: 200px;
-  height: 150px;
+  width: 300px;
+  height: 125px;
   border: 1px solid black;
   border-radius: 10px;
   background-color: thistle;
@@ -96,11 +117,26 @@ button {
   }
 }
 
-#viewDocument {
-  max-width: 750px;
-  padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.478);
-  border-radius: 5px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.209);
+.viewDocument {
+  p {
+    text-align: center;
+  }
+  
+  #document {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.478);
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.209);
+  }
+}
+
+
+
+.editDocument {
+  p {
+    text-align: center;
+  }
 }
 
