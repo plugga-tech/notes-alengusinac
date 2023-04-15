@@ -1,4 +1,4 @@
-import '../style.scss';
+import '../style/style.scss';
 
 const app = document.querySelector('#app');
 const BASE_URL = 'http://localhost:3000';

@@ -1,4 +1,7 @@
+
 body {
+  margin: 0;
+  padding: 0;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -12,7 +15,6 @@ input {
 }
 
 button {
-  height: 25px;
   border: 1px solid rgba(0, 0, 0, 0.505);
   border-radius: 5px;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.245);
@@ -36,6 +38,22 @@ button {
   align-items: center;
 }
 
+.navigation {
+  height: 50px;
+  background-color: lightskyblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  border: 1px solid black;
+
+  button {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 15px;
+  }
+}
+
 #newDocumentMessage {
   margin-top: 20px;
 }
@@ -56,7 +74,6 @@ button {
   background-color: thistle;
   text-overflow: initial;
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.186);
-  
   
   h5, p {
     padding: 0 10px;
@@ -86,3 +103,4 @@ button {
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.209);
 }
+
