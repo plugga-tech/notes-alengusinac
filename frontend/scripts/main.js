@@ -18,8 +18,8 @@ function printDocuments() {
   app.innerHTML = `
     <h3>Welcome, ${user.username}!</h3>
     <div class="navigation">
-      <button id="logoutBtn">Logout</button>
-      <button id="createDocumentInputsBtn">Create Document</button>
+      <button class="secondary-btn" id="logoutBtn">Logout</button>
+      <button class="primary-btn" id="createDocumentInputsBtn">Create Document</button>
     </div>
     <div id="createDocumentContainer"></div>
     <h3>Documents</h3>
@@ -81,13 +81,14 @@ function printCreateNewDocument() {
   );
 
   createDocumentContainer.innerHTML = `
-    <div id="newDocumentMessage"></div>  
-    <h3>New Document</h3>
+  <h3>New Document</h3>
+  <div id="newDocumentMessage"></div>  
     <form action="">
-      <input id="newDocumentTitle" type="text" placeholder="Title"><br>
+      <input id="newDocumentTitle" type="text" placeholder="Title" maxlength="20">
+      <br>
       <textarea id="newDocumentDesc" type="text" placeholder="Description" cols="25" rows="5" maxlength="100"></textarea>
       <br>
-      <button id="createDocumentBtn">Create</button>
+      <button class="primary-btn" id="createDocumentBtn">Create</button>
       <button id="cancelCreateDocumentBtn">Cancel</button>
     </form>`;
 
@@ -133,6 +134,9 @@ async function createDocument(e) {
         );
         newDocumentMessage.innerHTML = 'The title is already used.';
       });
+  } else {
+    const messageBox = document.querySelector('#newDocumentMessage');
+    messageBox.innerHTML = 'The document needs a title.';
   }
 }
 
@@ -144,7 +148,11 @@ function viewDocument(id) {
 
       app.innerHTML = `
         <button id="backBtn">Back</button> 
-        <button id="editBtn" data-id="${doc.id}">Edit</button>
+        <button class="primary-btn" id="editBtn" data-id="${
+          doc.id
+        }">Edit</button>
+        <button id="deleteBtn" data-id="${doc.id}">Delete</button>
+        <div id="deletePopup"></div>
         <h3>${doc.title}</h3>
         <p>${doc.description}</p>
         <hr>
@@ -160,6 +168,21 @@ function viewDocument(id) {
       editBtn.addEventListener('click', (e) => {
         const id = e.currentTarget.dataset.id;
         editDocument(id);
+      });
+
+      const deleteBtn = document.querySelector('#deleteBtn');
+      deleteBtn.addEventListener('click', (e) => {
+        const docId = e.currentTarget.dataset.id;
+        const deletePopup = document.querySelector('#deletePopup');
+        deletePopup.innerHTML = `
+         <p>Are you sure you want to delete this document?</p>
+         <button id="cancelDeleteBtn">Cancel</button>
+         <button id="deleteDocumentBtn" data-id="${docId}">Delete</button>
+        `;
+        const deleteBtn = document.querySelector('#deleteDocumentBtn');
+        deleteBtn.addEventListener('click', (e) => {
+          deleteDocument(e.currentTarget.dataset.id);
+        });
       });
     });
 }
@@ -181,8 +204,9 @@ async function editDocument(id) {
 
   tinymce.init({
     selector: '#myTextArea',
+    height: '500',
     toolbar:
-      'undo redo | formatselect | fontselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent',
+      'undo redo | formatselect | fontselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent',
     setup: (editor) => {
       editor.on('init', () => {
         editor.setContent(doc.value ? doc.value : '');
@@ -221,6 +245,21 @@ function saveDocument(id) {
     .then((data) => {
       console.log(data.id);
       viewDocument(data.id);
+    });
+}
+
+function deleteDocument(id) {
+  const deleteItem = { id };
+  fetch(BASE_URL + '/documents/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/JSON',
+    },
+    body: JSON.stringify(deleteItem),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      printDocuments();
     });
 }
 
@@ -286,6 +325,9 @@ async function login(e) {
             "Username and password don't match.";
         }
       });
+  } else {
+    document.querySelector('#loginMessage').innerHTML =
+      'Fields can not be empty.';
   }
 }
 
