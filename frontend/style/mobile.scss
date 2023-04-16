@@ -7,6 +7,9 @@ body {
 
 h1 {
   font-family: 'Courier New', Courier, monospace;
+}
+
+body > h1 {
   text-align: center;
 }
 
@@ -72,7 +75,6 @@ button {
       width: 300px;
       margin-bottom: 10px;
     }
-
   }
 }
 
@@ -119,9 +121,6 @@ button {
 }
 
 .viewDocument {
-  p {
-    text-align: center;
-  }
   
   #document {
     max-width: 750px;
@@ -131,6 +130,10 @@ button {
     border-radius: 5px;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.209);
   }
+}
+
+.viewDocument > p {
+  text-align: center;
 }
 
 
