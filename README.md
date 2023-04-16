@@ -1,1 +1,20 @@
 # notes-alengusinac
+
+### RUN:
+
+Terminal 1:
+1. cd frontend/
+2. npm install
+3. npm run dev
+
+Terminal 2:
+1. cd backend/
+2. npm install
+3. nodemon start
+
+Start database and import mockdata from "mock-data.sql" root folder.
+
+Test user:
+Username: test
+Password: test
+
