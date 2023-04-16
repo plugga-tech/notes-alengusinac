@@ -10,9 +10,9 @@ Terminal 1:
 Terminal 2:
 1. cd backend/
 2. npm install
-3. nodemon start
+3. nodemon start (port 3000)
 
-Start database and import mockdata from "mock-data.sql" root folder.
+Start database on port 8889 and import mockdata from "mock-data.sql" root folder.
 
 Test user:
 Username: test
