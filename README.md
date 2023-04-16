@@ -23,6 +23,8 @@ Password: notes
 Database: notes
 
 Test user:
+<br>
 Username: test
+<br>
 Password: test
 
