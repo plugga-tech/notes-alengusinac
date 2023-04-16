@@ -223,9 +223,11 @@ async function editDocument(id) {
     setup: (editor) => {
       editor.on('init', () => {
         editor.setContent(doc.value ? doc.value : '');
+        console.log('helllloooooo!!!!!!');
       });
       editor.on('change', () => {
         editor.save();
+        console.log('helllloooooo');
       });
     },
   });
@@ -233,12 +235,14 @@ async function editDocument(id) {
   const saveBtn = document.querySelector('#saveBtn');
   saveBtn.addEventListener('click', (e) => {
     const id = e.currentTarget.dataset.id;
+    tinymce.remove('#myTextArea');
     saveDocument(id);
   });
 
   const cancelBtn = document.querySelector('#cancelBtn');
   cancelBtn.addEventListener('click', (e) => {
     const id = e.currentTarget.dataset.id;
+    tinymce.remove('#myTextArea');
     viewDocument(id);
   });
 }
