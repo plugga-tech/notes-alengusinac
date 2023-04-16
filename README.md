@@ -15,8 +15,11 @@ Terminal 2:
 Start database on port 8889 and import mockdata from "mock-data.sql" root folder.
 
 Database user:
+<br>
 Username: notes
+<br>
 Password: notes
+<br>
 Database: notes
 
 Test user:
